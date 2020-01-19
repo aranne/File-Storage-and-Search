@@ -5,16 +5,17 @@
 
 int main(int argc, const char * argv[]) {
     printf("Hello, world!\n");
-    char* key = argv[1];
+    const char* key = argv[1];
     Array a = load(key);
     int size = a.size;
     int* p = a.array;
+    printf("%d\n", size);
     while (size--) {
         printf("%d\n", *p++);
     }
-    a.size = 0;
+    // free malloc address
     free(a.array);
     a.array = NULL;
-    // free(buffer);
+    a.size = 0;
     return 0;
 }

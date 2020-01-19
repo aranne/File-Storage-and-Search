@@ -3,6 +3,6 @@
 
 #include "Array.h"
 
-Array load(char* filename);
+Array load(const char* filename);
 
 #endif
