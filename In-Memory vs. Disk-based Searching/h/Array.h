@@ -6,6 +6,9 @@ typedef struct {
     int size;
 } Array;
 
+Array array_create(int size);
+void array_free(Array* a);
+
 #endif
 
 

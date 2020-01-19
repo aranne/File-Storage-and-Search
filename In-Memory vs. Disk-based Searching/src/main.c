@@ -14,8 +14,6 @@ int main(int argc, const char * argv[]) {
         printf("%d\n", *p++);
     }
     // free malloc address
-    free(a.array);
-    a.array = NULL;
-    a.size = 0;
+    array_free(&a);
     return 0;
 }

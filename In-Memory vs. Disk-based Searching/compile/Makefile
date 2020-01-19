@@ -5,7 +5,7 @@ CFLAGS  = -m32 -march=i586 -fno-builtin -Wall -O0 ${DEFS} ${INCLUDE}
 CC = gcc
 LIBS = -lm
 
-SRC = main.c load.c
+SRC = main.c load.c mem_lin.c Array.c 
 
 
 _DEPS = $(wildcard ../h/*.h)
@@ -30,6 +30,7 @@ clean:
 
 
 ARGS = key.db
+OUTPUT = test.txt
 run: ${PDIR}/${TARGET}
-	./${PDIR}/${TARGET} ./${PDIR}/${ARGS}
+	./${PDIR}/${TARGET} ./${PDIR}/${ARGS} > ./${PDIR}/${OUTPUT}
 
