@@ -19,12 +19,17 @@ ${ODIR}/%.o:../src/%.c ${DEFS}
 	${CC} -c $< -o $@ ${CFLAGS}
 
 TARGET = assn_1
-${TARGET}:${OBJ}
+PDIR = ..
+${PDIR}/${TARGET}:${OBJ}
 	${CC} -o $@ ${OBJ} ${CFLAGS} ${LIBS}
 
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o $(TARGET)
+	rm -f $(ODIR)/*.o ${PDIR}/$(TARGET)
 
+
+ARGS = sfsf
+run: ${PDIR}/${TARGET}
+	./${PDIR}/${TARGET} ${ARGS}
 
