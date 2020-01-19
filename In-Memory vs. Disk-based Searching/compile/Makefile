@@ -5,10 +5,10 @@ CFLAGS  = -m32 -march=i586 -fno-builtin -Wall -O0 ${DEFS} ${INCLUDE}
 CC = gcc
 LIBS = -lm
 
-SRC = main.c
+SRC = main.c load.c
 
 
-_DEPS = ${SRC:%.c=%.h}
+_DEPS = $(wildcard ../h/*.h)
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 ODIR = ./obj
@@ -29,7 +29,7 @@ clean:
 	rm -f $(ODIR)/*.o ${PDIR}/$(TARGET)
 
 
-ARGS = sfsf
+ARGS = key.db
 run: ${PDIR}/${TARGET}
-	./${PDIR}/${TARGET} ${ARGS}
+	./${PDIR}/${TARGET} ./${PDIR}/${ARGS}
 
