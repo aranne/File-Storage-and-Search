@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include "bin_search.h"
 
-int bin_search(int target, Array* a) {
-    int* array = a->array;
+int bin_search(int target, int* array, int size) {
     int left = 0;
-    int right = a->size;
+    int right = size;
     while (left < right) {
         int mid = left + (right - left) / 2;
         if (array[mid] == target) {

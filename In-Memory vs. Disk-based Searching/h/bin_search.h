@@ -3,6 +3,6 @@
 
 #include "Array.h"
 
-int bin_search(int target, Array* a);
+int bin_search(int target, int* a, int size);
 
 #endif

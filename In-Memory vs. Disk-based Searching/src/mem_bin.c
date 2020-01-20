@@ -17,7 +17,7 @@ void mem_bin_search(const char* kp, const char* sp) {
     int i;
     for (i = 0; i < seek.size; ++i) {
         int target = seek.array[i];
-        int find = bin_search(target, &key);
+        int find = bin_search(target, key.array, key.size);
         if (find) {
             hit.array[i] = 1;
             printf( "%12d: Yes\n", target);

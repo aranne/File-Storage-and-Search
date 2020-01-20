@@ -3,6 +3,6 @@
 
 #include "Array.h"
 
-int lin_search(int target, Array* array);
+int lin_search(int target, int* array, int size);
 
 #endif

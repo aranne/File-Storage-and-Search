@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include "lin_search.h"
 
-int lin_search(int target, Array* a) {
+int lin_search(int target, int* array, int size) {
     int i;
-    for (i = 0; i < a->size; ++i) {
-        if (a->array[i] == target) {
+    for (i = 0; i < size; ++i) {
+        if (array[i] == target) {
             return 1;
         }
     }
