@@ -9,12 +9,12 @@
 void disk_lin_search(const char* kp, const char* sp) {
     Array seek = load(sp);
     Array hit = array_create(seek.size);
-    FILE* fp = fopen(kp, "rb");
 
     // record start time
     struct timeval start;
     gettimeofday(&start, NULL);
     
+    FILE* fp = fopen(kp, "rb");
     if (fp) {
         fseek(fp, 0, SEEK_END);
         int size = ftell(fp) / sizeof(int);
@@ -32,10 +32,8 @@ void disk_lin_search(const char* kp, const char* sp) {
             }
             if (find) {
                 hit.array[i] = 1;
-                printf( "%12d: Yes\n", target);
             } else {
                 hit.array[i] = 0;
-                printf( "%12d: No\n", target);
             }
         }
     } else {
@@ -46,6 +44,16 @@ void disk_lin_search(const char* kp, const char* sp) {
     // record end time
     struct timeval end;
     gettimeofday(&end, NULL);
+
+    // output
+    int k;
+    for (k = 0; k < seek.size; ++k) {
+        if (hit.array[k] == 1) {
+            printf( "%12d: Yes\n", seek.array[k]);
+        } else {
+            printf( "%12d: No\n", seek.array[k]);
+        }
+    }
     struct timeval exec;
     timeval_subtract(&exec, &end, &start);
     printf("Time: %ld.%06ld\n", (long) exec.tv_sec, (long) exec.tv_usec);

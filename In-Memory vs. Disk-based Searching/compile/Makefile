@@ -27,7 +27,7 @@ TARGET = ${PDIR}/${_TARGET}
 ${TARGET}:${OBJ}
 	${CC} -o $@ ${OBJ} ${CFLAGS} ${LIBS}
 
-ARGS = ${PDIR}/key.db ${PDIR}/seek.db
+ARGS = --mem-bin ${PDIR}/key.db ${PDIR}/seek.db
 
 _OUTPUT = test.txt
 OUTPUT = ${PDIR}/${_OUTPUT} 
