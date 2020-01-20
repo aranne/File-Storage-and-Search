@@ -4,6 +4,6 @@
 int main(int argc, const char * argv[]) {
     const char* key = argv[1];
     const char* seek = argv[2];
-    search(key, seek);    
+    mem_lin_search(key, seek);    
     return 0;
 }

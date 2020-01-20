@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <sys/time.h>
-#include "mem_lin.h"
 #include "load.h"
+#include "mem_bin.h"
 #include "Array.h"
-#include "lin_search.h"
 
-void mem_lin_search(const char* kp, const char* sp) {
+void mem_bin_search(const char* kp, const char* sp) {
     // record start time
     struct timeval tm;
     gettimeofday(&tm, NULL);
@@ -15,18 +14,12 @@ void mem_lin_search(const char* kp, const char* sp) {
     Array key = load(kp);
     Array seek = load(sp);
     Array hit = array_create(seek.size);
-    int i;
-    for (i = 0; i < seek.size; ++i) {
-        int target = seek.array[i];
-        int find = lin_search(target, &key);
-        if (find) {
-            hit.array[i] = 1;
-            printf( "%12d: Yes\n", target);
-        } else {
-            hit.array[i] = 0;
-            printf( "%12d: No\n", target);
-        }
-    }
+    // int k;
+    // for (k = 0; k < seek.size; ++k) {
+    //     int target = seek.array[k];
+
+    // }
+    
 
     // record end time
     gettimeofday(&tm, NULL);
