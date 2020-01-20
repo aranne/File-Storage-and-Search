@@ -18,19 +18,23 @@ OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 ${ODIR}/%.o:../src/%.c ${DEFS}
 	${CC} -c $< -o $@ ${CFLAGS}
 
-TARGET = assn_1
 PDIR = ..
-${PDIR}/${TARGET}:${OBJ}
+
+_TARGET = assn_1
+TARGET = ${PDIR}/${_TARGET}
+
+${TARGET}:${OBJ}
 	${CC} -o $@ ${OBJ} ${CFLAGS} ${LIBS}
+
+ARGS = ${PDIR}/key.db ${PDIR}/seek.db
+
+_OUTPUT = test.txt
+OUTPUT = ${PDIR}/${_OUTPUT} 
+run: ${TARGET}
+	./${TARGET} ${ARGS} > ${OUTPUT}
+
 
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o ${PDIR}/$(TARGET)
-
-
-ARGS = key.db
-OUTPUT = test.txt
-run: ${PDIR}/${TARGET}
-	./${PDIR}/${TARGET} ./${PDIR}/${ARGS} > ./${PDIR}/${OUTPUT}
-
+	rm -f $(ODIR)/*.o $(TARGET) ${OUTPUT}
