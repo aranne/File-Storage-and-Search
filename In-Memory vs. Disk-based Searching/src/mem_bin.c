@@ -32,7 +32,7 @@ void mem_bin_search(const char* kp, const char* sp) {
     gettimeofday(&end, NULL);
     struct timeval exec;
     timeval_subtract(&exec, &end, &start);
-    printf("Time: %ld.%06ld\n", exec.tv_sec, exec.tv_usec);
+    printf("Time: %ld.%06ld\n", (long) exec.tv_sec, (long) exec.tv_usec);
 
     // free malloc address
     array_free(&key);

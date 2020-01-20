@@ -22,8 +22,8 @@ void disk_lin_search(const char* kp, const char* sp) {
         for (i = 0; i < seek.size; ++i) {
             int target = seek.array[i];
             int find = 0, res = 0;
+            fseek(fp, 0, SEEK_SET);
             for (j = 0; j < size; ++j) {
-                fseek(fp, j * sizeof(int), SEEK_SET);
                 fread(&res, sizeof(int), 1, fp);
                 if (res == target) {
                     find = 1;
@@ -41,13 +41,14 @@ void disk_lin_search(const char* kp, const char* sp) {
     } else {
         printf("Open file failed\n");
     }
+    fclose(fp);
 
     // record end time
     struct timeval end;
     gettimeofday(&end, NULL);
     struct timeval exec;
     timeval_subtract(&exec, &end, &start);
-    printf("Time: %ld.%06ld\n", exec.tv_sec, exec.tv_usec);
+    printf("Time: %ld.%06ld\n", (long) exec.tv_sec, (long) exec.tv_usec);
 
     // free malloc address
     array_free(&seek);

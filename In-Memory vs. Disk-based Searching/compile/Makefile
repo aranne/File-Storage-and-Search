@@ -1,6 +1,6 @@
 IDIR = ../h
 INCLUDE = -I${IDIR}
-CFLAGS  = -m32 -march=i586 -fno-builtin -Wall -O0 ${DEFS} ${INCLUDE}
+CFLAGS  = -Wall ${INCLUDE}
 
 CC = gcc
 LIBS = -lm
@@ -16,7 +16,7 @@ ODIR = ./obj
 _OBJ = ${SRC:%.c=%.o}
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-${ODIR}/%.o:../src/%.c ${DEFS}
+${ODIR}/%.o:../src/%.c ${DEPS}
 	${CC} -c $< -o $@ ${CFLAGS}
 
 PDIR = ..

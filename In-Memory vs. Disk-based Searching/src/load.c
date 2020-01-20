@@ -4,7 +4,7 @@
 
 Array load(const char* filename) {
     FILE* fp = fopen(filename, "rb");
-    Array a;
+    Array a = {NULL, 0};
     if (fp) {
         fseek(fp, 0, SEEK_END);
         int size = ftell(fp) / sizeof(int);
