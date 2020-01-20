@@ -3,6 +3,7 @@
 #include "load.h"
 #include "mem_bin.h"
 #include "Array.h"
+#include "bin_search.h"
 
 void mem_bin_search(const char* kp, const char* sp) {
     // record start time
@@ -14,12 +15,18 @@ void mem_bin_search(const char* kp, const char* sp) {
     Array key = load(kp);
     Array seek = load(sp);
     Array hit = array_create(seek.size);
-    // int k;
-    // for (k = 0; k < seek.size; ++k) {
-    //     int target = seek.array[k];
-
-    // }
-    
+    int i;
+    for (i = 0; i < seek.size; ++i) {
+        int target = seek.array[i];
+        int find = bin_search(target, &key);
+        if (find) {
+            hit.array[i] = 1;
+            printf( "%12d: Yes\n", target);
+        } else {
+            hit.array[i] = 0;
+            printf( "%12d: No\n", target);
+        }
+    }
 
     // record end time
     gettimeofday(&tm, NULL);

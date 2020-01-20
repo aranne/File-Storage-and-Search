@@ -5,7 +5,7 @@ CFLAGS  = -m32 -march=i586 -fno-builtin -Wall -O0 ${DEFS} ${INCLUDE}
 CC = gcc
 LIBS = -lm
 
-SRC = main.c load.c Array.c mem_lin.c mem_bin.c lin_search.c 
+SRC = main.c load.c Array.c mem_lin.c mem_bin.c lin_search.c bin_search.c 
 
 
 _DEPS = $(wildcard ../h/*.h)
