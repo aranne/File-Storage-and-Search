@@ -4,13 +4,12 @@
 #include "mem_bin.h"
 #include "Array.h"
 #include "bin_search.h"
+#include "time_sub.h"
 
 void mem_bin_search(const char* kp, const char* sp) {
     // record start time
-    struct timeval tm;
-    gettimeofday(&tm, NULL);
-    long int start_sec = tm.tv_sec;
-    long int start_usec = tm.tv_usec;
+    struct timeval start;
+    gettimeofday(&start, NULL);
 
     Array key = load(kp);
     Array seek = load(sp);
@@ -29,10 +28,11 @@ void mem_bin_search(const char* kp, const char* sp) {
     }
 
     // record end time
-    gettimeofday(&tm, NULL);
-    long int end_sec = tm.tv_sec;
-    long int end_usec = tm.tv_usec;
-    printf("Time: %ld.%06ld\n", end_sec - start_sec, end_usec - start_usec);
+    struct timeval end;
+    gettimeofday(&end, NULL);
+    struct timeval exec;
+    timeval_subtract(&exec, &end, &start);
+    printf("Time: %ld.%06ld\n", exec.tv_sec, exec.tv_usec);
 
     // free malloc address
     array_free(&key);
