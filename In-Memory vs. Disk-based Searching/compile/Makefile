@@ -29,7 +29,7 @@ ${TARGET}:${OBJ}
 
 ARGS = --mem-bin ${PDIR}/key.db ${PDIR}/seek.db
 
-_OUTPUT = test.txt
+_OUTPUT = output.txt
 OUTPUT = ${PDIR}/${_OUTPUT} 
 run: ${TARGET}
 	./${TARGET} ${ARGS} > ${OUTPUT}
