@@ -4,6 +4,7 @@
 #include "load.h"
 #include "Array.h"
 #include "time_sub.h"
+#include "output.h"
 
 void disk_bin_search(const char* kp, const char* sp) {
     Array seek = load(sp);
@@ -50,18 +51,11 @@ void disk_bin_search(const char* kp, const char* sp) {
     struct timeval end;
     gettimeofday(&end, NULL);
 
-    // output
-    int k;
-    for (k = 0; k < seek.size; ++k) {
-        if (hit.array[k] == 1) {
-            printf( "%12d: Yes\n", seek.array[k]);
-        } else {
-            printf( "%12d: No\n", seek.array[k]);
-        }
-    }
     struct timeval exec;
     timeval_subtract(&exec, &end, &start);
-    printf("Time: %ld.%06ld\n", (long) exec.tv_sec, (long) exec.tv_usec);
+    
+    // output 
+    print_output(&seek, &hit, exec);
 
     // free malloc address
     array_free(&seek);

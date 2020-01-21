@@ -6,7 +6,7 @@ CC = gcc
 LIBS = -lm
 
 SRC = main.c load.c Array.c mem_lin.c mem_bin.c lin_search.c bin_search.c \
-      disk_lin.c time_sub.c disk_bin.c 
+      disk_lin.c time_sub.c disk_bin.c output.c 
 
 
 _DEPS = $(wildcard ../h/*.h)
