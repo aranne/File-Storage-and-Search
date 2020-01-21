@@ -22,7 +22,7 @@ int main(int argc, const char * argv[]) {
     } else if (strcmp(mode, "--disk-bin") == 0) {
         disk_bin_search(key, seek);
     } else {
-        printf("Argument format error\n");
+        printf("Argument name error\n");
     }
     return 0;
 }
