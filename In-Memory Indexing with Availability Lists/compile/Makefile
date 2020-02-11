@@ -5,7 +5,8 @@ CFLAGS  = -Wall ${INCLUDE}
 CC = gcc
 LIBS = -lm
 
-SRC = main.c interface.c   
+SRC = main.c interface.c add.c array.c test.c \
+      primindex.c 
 
 _DEPS = $(wildcard ../h/*.h)
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
@@ -31,13 +32,17 @@ INPUT = ${PDIR}/${_INPUT}
 _OUTPUT = output.txt
 OUTPUT = ${PDIR}/${_OUTPUT} 
 
-ARGS = --best-fit ${PDIR}/stu​dent.​db 
+ARGS = --first-fit ${PDIR}/stu​dent.​db 
 
 run: ${TARGET}
 	./${TARGET} ${ARGS} < ${INPUT} > ${OUTPUT}
 
 
+_BINARY = firstindex.bin bestindex.bin worstindex.bin \
+          firstlist.bin  bestlist.bin  worstlist.bin
+BINARY = ${PDIR}/${_BINARY}
+
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o $(TARGET) ${OUTPUT}
+	rm -f $(ODIR)/*.o $(TARGET) ${OUTPUT} ${BINARY} ${_BINARY}
