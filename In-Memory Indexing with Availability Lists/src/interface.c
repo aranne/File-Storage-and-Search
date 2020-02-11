@@ -21,15 +21,15 @@ const char* listname = NULL;
 Array primindex;
 
 void initialize(const char* m, const char* fn) {
-    mode = m;
-    filename = fn;
-    initDB();
-    primindex = loadindex();
-    read();
-    writeindex(&primindex);
+    initDB(m, fn);
+    // primindex = loadindex();
+    // read();
+    // writeindex(&primindex);
 }
 
-void initDB() {
+void initDB(const char* m, const char* fn) {
+    mode = m;
+    filename = fn;
     if (strcmp(mode, "--first-fit") == 0) {
         indexname = "firstindex.bin";
         listname = "firstlist.bin";

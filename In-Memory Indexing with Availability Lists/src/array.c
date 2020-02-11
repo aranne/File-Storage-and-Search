@@ -3,7 +3,7 @@
 #include <string.h>
 #include "array.h"
 
-const int INIT_SIZE = 8;
+const int INIT_SIZE = 128;
 const int REFACTOR = 2;
 
 void array_resize(Array *a, int new_size);

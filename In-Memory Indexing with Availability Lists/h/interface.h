@@ -2,7 +2,7 @@
 #define interface_h
 
 void initialize(const char* m, const char* fn);
-void initDB();
+void initDB(const char* m, const char* fn);
 void read();
 void parse(char * line);
 
