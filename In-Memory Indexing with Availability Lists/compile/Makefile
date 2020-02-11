@@ -5,7 +5,7 @@ CFLAGS  = -Wall ${INCLUDE}
 CC = gcc
 LIBS = -lm
 
-SRC = main.c 
+SRC = main.c interface.c   
 
 _DEPS = $(wildcard ../h/*.h)
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
