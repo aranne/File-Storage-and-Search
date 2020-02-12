@@ -33,7 +33,7 @@ INPUT = ${PDIR}/${_INPUT}
 _OUTPUT = output.txt
 OUTPUT = ${PDIR}/${_OUTPUT} 
 
-ARGS = --best-fit ${PDIR}/stu​dent.​db 
+ARGS = --first-fit ${PDIR}/stu​dent.​db 
 
 run: ${TARGET}
 	./${TARGET} ${ARGS} < ${INPUT} > ${OUTPUT}

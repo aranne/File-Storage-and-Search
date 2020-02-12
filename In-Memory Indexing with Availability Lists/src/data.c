@@ -39,7 +39,7 @@ void add_record(const char* keystr, const char* record) {
         printf("Record with SID=%d exists\n", key);
         return;
     }
-    size_t len = strlen(record) - 1;
+    size_t len = strlen(record) - 1;              // remove ending '\0' 
     size_t size = sizeof(int) + len;
     /* Search the avail​abil​ity list for a hole */
     int hole_index = find_hole(&holelist, size);
@@ -76,8 +76,9 @@ char* read_record(long offset) {
     int size;
     char* record;
     fread(&size, sizeof(int), 1, dbfp);
-    record = (char*) malloc((size_t) size);
+    record = (char*) malloc((size_t) size + 1);
     fread(record, size, 1, dbfp);
+    record[size] = '\0';                         // add ending '\0'
     return record;
 }
 
