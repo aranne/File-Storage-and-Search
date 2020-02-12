@@ -6,6 +6,9 @@
 
 const char* mode;
 const char* listname;
+
+int search_hole(ArrayList* holelist, size_t size);
+int peek_hole(ArrayList* holelist, size_t size);
 void append_hole(ArrayList* holelist, avail_S hole);
 long find_first_hole(ArrayList* holelist, size_t size);
 long find_best_hole(ArrayList* holelist, size_t size);
@@ -60,6 +63,30 @@ void add_hole(ArrayList* holelist, avail_S hole) {
 }
 
 int find_hole(ArrayList* holelist, size_t size) {
+    int hole_index = -1;
+    if (strcmp(mode, "--first-fit") == 0) {
+        hole_index = search_hole(holelist, size);
+    } else if (strcmp(mode, "--best-fit") == 0) {
+        hole_index = search_hole(holelist, size);
+    } else if (strcmp(mode, "--worst-fit") == 0) {
+        hole_index = peek_hole(holelist, size);
+    } else {
+        printf("Input Mode Error\n");
+    }
+    return hole_index;
+}
+
+avail_S delete_hole(ArrayList* holelist, int i) {
+    return list_delete(holelist, i);
+}
+
+/* ###################################################
+
+############ HELPER FUCTIONS #########################
+
+#################################################### */
+
+int search_hole(ArrayList* holelist, size_t size) {
     int i;
     avail_S* array = holelist->array;
     for (i = 0; i < holelist->num; i++) {
@@ -74,16 +101,6 @@ int peek_hole(ArrayList* holelist, size_t size) {
     if (array[0].size >= size) return 0;
     return -1;
 }
-
-avail_S delete_hole(ArrayList* holelist, int i, size_t size) {
-    return list_delete(holelist, i);
-}
-
-/* ###################################################
-
-############ HELPER FUCTIONS #########################
-
-#################################################### */
 
 void append_hole(ArrayList* holelist, avail_S hole) {
     list_add(holelist, holelist->num, hole);

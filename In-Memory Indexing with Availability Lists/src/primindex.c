@@ -3,9 +3,8 @@
 #include "db.h"
 
 const char* indexname;
-int* binarySearch(Array* a, int key);
 
-Array loadindex() {
+Array load_index() {
     Array a = array_create(0);
     FILE* fp = fopen(indexname, "r+b");
     if (fp) {
@@ -25,7 +24,7 @@ Array loadindex() {
     return a;
 }
 
-void writeindex(Array* index) {
+void write_index(Array* index) {
     FILE* fp = fopen(indexname, "w+b");
     fseek(fp, 0, SEEK_SET);
     fwrite(index->array, sizeof(index_S), index->num, fp);
@@ -37,13 +36,17 @@ void freeindex(Array* index) {
     array_free(index);
 }
 
-void addindex(Array* index, index_S idx) {
+int addindex(Array* index, index_S idx) {
+    int flag;
     int* pair = binarySearch(index, idx.key);
     if (pair[0]) {
-        printf("Record with SID=%d exists\n", idx.key);
+        flag = 0;
     } else {
-        array_add(index, pair[1], idx);
+        printf("%d", pair[1]);
+        // array_add(index, pair[1], idx);
+        flag = 1;
     }
+    return flag;
 }
 
 long findindex(Array* index, int key) {
@@ -51,7 +54,6 @@ long findindex(Array* index, int key) {
     if (pair[0]) {
         return index->array[pair[1]].offset;
     } else {
-        printf("No record with SID=%d exists\n", key);
         return -1;
     }
 }
@@ -78,8 +80,11 @@ int* binarySearch(Array* a, int key) {
     return res;
 }
 
+index_S deleteindex(Array* index, int i) {
+    return array_delete(index, i);
+}
+
 void printindex(Array* index) {
-    if (index->num == 0) return;
     printf("Index:\n");
     int i;
     for (i = 0; i < index->num; i++) {

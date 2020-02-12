@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <arraylist.h>
+#include "arraylist.h"
 
 const int INITSIZE = 128;
 const int FACTOR = 2;

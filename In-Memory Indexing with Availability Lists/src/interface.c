@@ -5,6 +5,8 @@
 #include "db.h"
 #include "interface.h"
 #include "primindex.h"
+#include "holelist.h"
+#include "data.h"
 
 
 #define NCMD 3
@@ -17,16 +19,18 @@ const char* mode = NULL;
 const char* filename = NULL;
 const char* indexname = NULL;
 const char* listname = NULL;
-Array primindex;
+int running;             /* program running flag */
+Array     primindex;     /* primary key index */
+ArrayList holelist;      /* hole availability list */
+FILE* dbfp;              /* file pointer for data file */
 
 void initialize(const char* m, const char* fn) {
     initDB(m, fn);
-    // primindex = loadindex();
-    // read();
-    // writeindex(&primindex);
+    loading();
 }
 
 void initDB(const char* m, const char* fn) {
+    running = 1;
     mode = m;
     filename = fn;
     if (strcmp(mode, "--first-fit") == 0) {
@@ -43,13 +47,27 @@ void initDB(const char* m, const char* fn) {
     }
 }
 
+void loading() {
+    dbfp = load_data();
+    holelist = load_holelist();
+    primindex = load_index();
+}
+
+void writing() {
+    write_data(dbfp);
+    write_holelist(&holelist);
+    write_index(&primindex);
+}
+
 void read() {
     char *line = NULL;
     size_t size = 0;
     ssize_t len = 0;
 
-    while ((len = getline(&line, &size, stdin)) != EOF) {
-        parse(line);
+    while (running) {
+        while ((len = getline(&line, &size, stdin)) != EOF) {
+            parse(line);
+        }
     }
 
     free(line);
@@ -69,31 +87,31 @@ void parse(char * line) {
     if (strcmp(command[0], "add") == 0) {
         addR(command);
     } else if (strcmp(command[0], "find") == 0) {
-        findR(command);
+        // findR(command);
     } else if (strcmp(command[0], "del") == 0) {
-        deleteR(command);
+        // deleteR(command);
     } else if (strcmp(command[0], "end") == 0) {
-        end(command);
+        end();
     } else {
         printf("Input Command Error.\n");
     }
 }
 
 void addR(const char* command[]) {
-    int i;
-    for (i = 0; i < NADD; i++) {
-        
-    }
+    add_record(command[1], command[2]);
 }
 
 void findR(const char* command[]) {
-
+    find_record(command[1]);
 }
 
 void deleteR(const char* command[]) {
-
+    delete_record(command[1]);
 }
 
-void end(const char* command[]) {
-
+void end() {
+    running = 0;
+    printindex(&primindex);
+    print_holelist(&holelist);
+    writing();
 }

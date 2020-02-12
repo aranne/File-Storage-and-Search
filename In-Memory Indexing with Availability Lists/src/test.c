@@ -34,15 +34,17 @@ void test3() {
 
 void test2() {
     
-    Array index = loadindex();
+    Array index = load_index();
     int i;
     for (i = 0; i < 10; i++) {
-        index_S idx = {i, 1};
+        index_S idx = {i * i, 1};
         addindex(&index, idx);
     }
+    index_S idx1 = {26, 1};
+    addindex(&index, idx1);
     printindex(&index);
     array_print(&index);
-    writeindex(&index);
+    write_index(&index);
 }
 
 void test4() {

@@ -5,8 +5,8 @@ CFLAGS  = -Wall ${INCLUDE}
 CC = gcc
 LIBS = -lm
 
-SRC = main.c interface.c add.c array.c test.c \
-      primindex.c  arraylist.c holelist.c     \
+SRC = main.c interface.c array.c test.c arraylist.c \
+      primindex.c holelist.c data.c 
 
 
 _DEPS = $(wildcard ../h/*.h)
@@ -40,10 +40,14 @@ run: ${TARGET}
 
 
 _BINARY = firstindex.bin bestindex.bin worstindex.bin \
-          firstlist.bin  bestlist.bin  worstlist.bin
+          firstlist.bin  bestlist.bin  worstlist.bin  \
+
 BINARY = ${PDIR}/${_BINARY}
+
+_DB = stu​dent.​db
+DB = ${PDIR}/${_DB}
 
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o $(TARGET) ${OUTPUT} ${BINARY} ${_BINARY}
+	rm -f $(ODIR)/*.o $(TARGET) ${OUTPUT} ${_BINARY} ${BINARY} ${DB}

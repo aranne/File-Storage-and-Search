@@ -3,13 +3,13 @@
 
 #include "array.h"
 
-extern Array primindex;
-
-Array loadindex(void);
-void writeindex(Array* index);
+Array load_index(void);
+void write_index(Array* index);
 void freeindex(Array* index);
-void addindex(Array* index, index_S idx);
+int addindex(Array* index, index_S idx);
 long findindex(Array* index, int key);
+index_S deleteindex(Array* index, int i);
+int* binarySearch(Array* a, int key);
 void printindex(Array* index);
 
 #endif
