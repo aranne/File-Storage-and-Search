@@ -6,7 +6,8 @@ CC = gcc
 LIBS = -lm
 
 SRC = main.c interface.c add.c array.c test.c \
-      primindex.c  arraylist.c 
+      primindex.c  arraylist.c holelist.c     \
+
 
 _DEPS = $(wildcard ../h/*.h)
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
@@ -32,7 +33,7 @@ INPUT = ${PDIR}/${_INPUT}
 _OUTPUT = output.txt
 OUTPUT = ${PDIR}/${_OUTPUT} 
 
-ARGS = --first-fit ${PDIR}/stu​dent.​db 
+ARGS = --best-fit ${PDIR}/stu​dent.​db 
 
 run: ${TARGET}
 	./${TARGET} ${ARGS} < ${INPUT} > ${OUTPUT}

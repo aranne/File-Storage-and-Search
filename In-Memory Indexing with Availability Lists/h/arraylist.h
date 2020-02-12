@@ -15,8 +15,8 @@ int list_size(const ArrayList* a);
 int list_num(const ArrayList* a);
 avail_S* list_at(const ArrayList* a, int i);
 avail_S list_get(const ArrayList* a, int i);
-void list_set(ArrayList* a, int i, avail_S availlist);
-void list_add(ArrayList* a, int i, avail_S availlist);
+void list_set(ArrayList* a, int i, avail_S hole);
+void list_add(ArrayList* a, int i, avail_S hole);
 avail_S list_delete(ArrayList* a, int i);
 void list_print(const ArrayList* a);
 

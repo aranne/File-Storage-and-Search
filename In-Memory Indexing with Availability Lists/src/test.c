@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include "test.h"
-#include "array.h"
-#include "index.h"
 #include "primindex.h"
-#include "arraylist.h"
+#include "holelist.h"
 
 
 void test1() {
@@ -45,4 +43,15 @@ void test2() {
     printindex(&index);
     array_print(&index);
     writeindex(&index);
+}
+
+void test4() {
+    ArrayList holelist = load_holelist();
+    int i;
+    for (i = 0; i < 10; i++) {
+        avail_S hole = {i, 1};
+        add_hole(&holelist, hole);
+    }
+    print_holelist(&holelist);
+    write_holelist(&holelist);
 }

@@ -4,7 +4,6 @@
 #include <string.h>
 #include "db.h"
 #include "interface.h"
-#include "array.h"
 #include "primindex.h"
 
 

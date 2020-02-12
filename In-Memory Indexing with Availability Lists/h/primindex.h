@@ -1,7 +1,6 @@
 #ifndef primindex_h
 #define primindex_h
 
-#include "index.h"
 #include "array.h"
 
 extern Array primindex;

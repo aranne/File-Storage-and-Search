@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "primindex.h"
-#include "array.h"
 #include "db.h"
 
 const char* indexname;
@@ -21,8 +20,8 @@ Array loadindex() {
         }
         a.num = (int) num;
         a.size = (int) num;
+        fclose(fp);
     }
-    fclose(fp);
     return a;
 }
 
