@@ -24,6 +24,15 @@ Array     primindex;     /* primary key index */
 ArrayList holelist;      /* hole availability list */
 FILE* dbfp;              /* file pointer for data file */
 
+void initDB(const char* m, const char* fn);
+void loading(void);
+void writing(void);
+void parse(char * line);
+void addR(const char* command[]);
+void findR(const char* command[]);
+void deleteR(const char* command[]);
+void end();
+
 void initialize(const char* m, const char* fn) {
     initDB(m, fn);
     loading();
@@ -33,18 +42,8 @@ void initDB(const char* m, const char* fn) {
     running = 1;
     mode = m;
     filename = fn;
-    if (strcmp(mode, "--first-fit") == 0) {
-        indexname = "firstindex.bin";
-        listname = "firstlist.bin";
-    } else if (strcmp(mode, "--best-fit") == 0) {
-        indexname = "bestindex.bin";
-        listname = "bestlist.bin";
-    } else if (strcmp(mode, "--worst-fit") == 0) {
-        indexname = "worstindex.bin";
-        listname = "worstlist.bin";
-    } else {
-        printf("Input Mode Error\n");
-    }
+    indexname = "index.bin";
+    listname = "list.bin";
 }
 
 void loading() {
@@ -65,11 +64,10 @@ void read() {
     ssize_t len = 0;
 
     while (running) {
-        while ((len = getline(&line, &size, stdin)) != EOF) {
+        if ((len = getline(&line, &size, stdin)) != EOF) {
             parse(line);
         }
     }
-
     free(line);
 }
 
@@ -111,6 +109,9 @@ void deleteR(const char* command[]) {
 
 void end() {
     running = 0;
+}
+
+void exit_db() {
     printindex(&primindex);
     print_holelist(&holelist);
     writing();

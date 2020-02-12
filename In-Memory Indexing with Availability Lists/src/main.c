@@ -11,5 +11,6 @@ int main(int argc, const char * argv[]) {
     const char* fn = argv[2];
     initialize(m, fn);
     read();
+    exit_db();
     return 0;
 }

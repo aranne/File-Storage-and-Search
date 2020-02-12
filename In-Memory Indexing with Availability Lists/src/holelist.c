@@ -142,5 +142,5 @@ void print_holelist(ArrayList* holelist) {
         printf( "size=%d: offset=%ld\n", (int) array[i].size, array[i].offset);
     }
     printf( "Number of holes: %d\n", num );
-    printf( "Hole space: %d", size );
+    printf( "Hole space: %d\n", size );
 }

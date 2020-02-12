@@ -38,16 +38,10 @@ ARGS = --first-fit ${PDIR}/stu​dent.​db
 run: ${TARGET}
 	./${TARGET} ${ARGS} < ${INPUT} > ${OUTPUT}
 
-
-_BINARY = firstindex.bin bestindex.bin worstindex.bin \
-          firstlist.bin  bestlist.bin  worstlist.bin  \
-
-BINARY = ${PDIR}/${_BINARY}
-
-_DB = stu​dent.​db
+_DB = student.db 
 DB = ${PDIR}/${_DB}
 
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o $(TARGET) ${OUTPUT} ${_BINARY} ${BINARY} ${DB}
+	rm -f $(ODIR)/*.o $(TARGET) ${OUTPUT} ${PDIR}/*.bin ./*.bin ${DB}
