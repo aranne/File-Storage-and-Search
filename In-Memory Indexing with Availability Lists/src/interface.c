@@ -87,9 +87,9 @@ void parse(char * line) {
     if (strcmp(command[0], "add") == 0) {
         addR(command);
     } else if (strcmp(command[0], "find") == 0) {
-        // findR(command);
+        findR(command);
     } else if (strcmp(command[0], "del") == 0) {
-        // deleteR(command);
+        deleteR(command);
     } else if (strcmp(command[0], "end") == 0) {
         end();
     } else {

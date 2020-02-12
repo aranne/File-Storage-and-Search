@@ -27,7 +27,7 @@ TARGET = ${PDIR}/${_TARGET}
 ${TARGET}:${OBJ}
 	${CC} -o $@ ${OBJ} ${CFLAGS} ${LIBS}
 
-_INPUT = in​put-01.​txt 
+_INPUT = input-02.txt 
 INPUT = ${PDIR}/${_INPUT}
 
 _OUTPUT = output.txt

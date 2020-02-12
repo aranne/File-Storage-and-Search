@@ -39,7 +39,7 @@ void add_record(const char* keystr, const char* record) {
         printf("Record with SID=%d exists\n", key);
         return;
     }
-    size_t len = strlen(record);
+    size_t len = strlen(record) - 1;
     size_t size = sizeof(int) + len;
     /* Search the avail​abil​ity list for a hole */
     int hole_index = find_hole(&holelist, size);
@@ -47,12 +47,12 @@ void add_record(const char* keystr, const char* record) {
     if (hole_index == -1) {
         fseek(dbfp, 0, SEEK_END);
         offset = ftell(dbfp);
-        write_record(offset, (int) len - 1, record);
+        write_record(offset, (int) len, record);
     } else {
         avail_S* array = holelist.array;
         size_t hole_size = array[hole_index].size;
         offset = array[hole_index].offset;
-        long off = write_record(offset, (int) len - 1, record);
+        long off = write_record(offset, (int) len, record);
         delete_hole(&holelist, hole_index);
         if (hole_size > size) {
             avail_S hole = {hole_size - size, off};
@@ -73,10 +73,10 @@ long write_record(long offset, int len, const char* record) {
 
 char* read_record(long offset) {
     fseek(dbfp, offset, SEEK_SET);
-    size_t size;
+    int size;
     char* record;
-    fread(&size, sizeof(size_t), 1, dbfp);
-    record = (char*) malloc(size);
+    fread(&size, sizeof(int), 1, dbfp);
+    record = (char*) malloc((size_t) size);
     fread(record, size, 1, dbfp);
     return record;
 }
@@ -103,10 +103,10 @@ int delete_record(const char* keystr) {
     }
     int index = pair[1];
     int offset = primindex.array[index].offset;
-    size_t size;
+    int size;
     fseek(dbfp, offset, SEEK_SET);
-    fread(&size, sizeof(size_t), 1, dbfp);
-    size_t hole_size = sizeof(size_t) + size;
+    fread(&size, sizeof(int), 1, dbfp);
+    size_t hole_size = sizeof(int) + (size_t) size;
     avail_S hole = {hole_size, offset};
     add_hole(&holelist, hole);
     deleteindex(&primindex, index);

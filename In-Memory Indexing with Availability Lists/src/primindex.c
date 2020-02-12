@@ -7,10 +7,14 @@ const char* indexname;
 Array load_index() {
     Array a = array_create(0);
     FILE* fp = fopen(indexname, "r+b");
-    if (fp) {
+    if (fp != NULL) {
         fseek(fp, 0, SEEK_END);
         size_t num = ftell(fp) / sizeof(index_S);
-        a = array_create((int) num);
+        if ((int) num == 0) {
+            a = array_create(0);
+        } else {
+            a = array_create((int) num * 2);
+        }
         fseek(fp, 0, SEEK_SET);
         size_t read_num = fread(a.array, sizeof(index_S), num, fp);
         if (num != read_num) {
@@ -18,9 +22,8 @@ Array load_index() {
             printf("Read Index Error\n");
         }
         a.num = (int) num;
-        a.size = (int) num;
         fclose(fp);
-    }
+    }  
     return a;
 }
 
@@ -42,8 +45,7 @@ int addindex(Array* index, index_S idx) {
     if (pair[0]) {
         flag = 0;
     } else {
-        printf("%d", pair[1]);
-        // array_add(index, pair[1], idx);
+        array_add(index, pair[1], idx);
         flag = 1;
     }
     return flag;

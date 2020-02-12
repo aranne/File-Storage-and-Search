@@ -19,10 +19,14 @@ int compareHoleDCS (const void * a, const void * b);
 ArrayList load_holelist() {
     ArrayList a = list_create(0);
     FILE* fp = fopen(listname, "r+b");
-    if (fp) {
+    if (fp != NULL) {
         fseek(fp, 0, SEEK_END);
         size_t num = ftell(fp) / sizeof(avail_S);
-        a = list_create((int) num);
+        if ((int) num == 0) {
+            a = list_create(0);
+        } else {
+            a = list_create((int) num * 2);
+        }
         fseek(fp, 0, SEEK_SET);
         size_t read_num = fread(a.array, sizeof(avail_S), num, fp);
         if (num != read_num) {
@@ -30,7 +34,6 @@ ArrayList load_holelist() {
             printf("Read Index Error\n");
         }
         a.num = (int) num;
-        a.size = (int) num;
         fclose(fp);
     }
     return a;
@@ -139,5 +142,5 @@ void print_holelist(ArrayList* holelist) {
         printf( "size=%d: offset=%ld\n", (int) array[i].size, array[i].offset);
     }
     printf( "Number of holes: %d\n", num );
-    printf( "Hole space: %d\n", size );
+    printf( "Hole space: %d", size );
 }
