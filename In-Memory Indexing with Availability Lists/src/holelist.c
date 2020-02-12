@@ -124,9 +124,9 @@ int compareHoleDCS (const void * a, const void * b)
 {
   if ( ((avail_S*) a)->size < ((avail_S*) b)->size ) return 1;
   else if ( ((avail_S*) a)->size == ((avail_S*) b)->size ) {
-      if ( ((avail_S*) a)->offset < ((avail_S*) b)->offset ) return 1;
+      if ( ((avail_S*) a)->offset < ((avail_S*) b)->offset ) return -1;
       if ( ((avail_S*) a)->offset == ((avail_S*) b)->offset ) return 0;
-      if ( ((avail_S*) a)->offset > ((avail_S*) b)->offset ) return -1;
+      if ( ((avail_S*) a)->offset > ((avail_S*) b)->offset ) return 1;
   }
   return -1;
 }
