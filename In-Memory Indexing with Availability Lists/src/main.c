@@ -11,6 +11,7 @@ int main(int argc, const char * argv[]) {
     const char* fn = argv[2];
     initialize(m, fn);
     // test1();
-    test2();
+    // test2();
+    test3();
     return 0;
 }

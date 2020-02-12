@@ -6,7 +6,7 @@ CC = gcc
 LIBS = -lm
 
 SRC = main.c interface.c add.c array.c test.c \
-      primindex.c 
+      primindex.c  arraylist.c 
 
 _DEPS = $(wildcard ../h/*.h)
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))

@@ -21,8 +21,8 @@ Array loadindex() {
         }
         a.num = (int) num;
         a.size = (int) num;
-        fclose(fp);
     }
+    fclose(fp);
     return a;
 }
 

@@ -7,7 +7,7 @@ typedef struct {
     index_S* array;
     int size;
     int num;
-} Array;
+} Array;        /* Array for index */
 
 Array array_create(int size);
 void array_free(Array* a);
