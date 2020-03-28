@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "mergesort.h"
 
 int main(int argc, const char * argv[]) {
     if (argc != 4) {
@@ -10,7 +11,7 @@ int main(int argc, const char * argv[]) {
     const char* input = argv[2];
     const char* output = argv[3];
     if (strcmp(mode, "--basic") == 0) {
-
+        basic_mergesort(input, output);
     } else if (strcmp(mode, "--multistep") == 0) {
 
     } else if (strcmp(mode, "--replacement") == 0) {

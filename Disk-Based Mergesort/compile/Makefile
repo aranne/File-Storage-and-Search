@@ -5,7 +5,8 @@ CFLAGS  = -Wall ${INCLUDE}
 CC = gcc
 LIBS = -lm
 
-SRC = main.c 
+SRC = main.c buffer.c mergesort.c \
+	  
 
 
 _DEPS = $(wildcard ../h/*.h)
@@ -26,7 +27,7 @@ TARGET = ${PDIR}/${_TARGET}
 ${TARGET}:${OBJ}
 	${CC} -o $@ ${OBJ} ${CFLAGS} ${LIBS}
 
-ARGS = --basic input.bin sort.bin
+ARGS = --basic ${PDIR}/input.bin ${PDIR}/sort.bin
 
 run: ${TARGET}
 	./${TARGET} ${ARGS}
@@ -34,4 +35,4 @@ run: ${TARGET}
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o $(TARGET) ${PDIR}/sort.bin
+	rm -f $(ODIR)/*.o $(TARGET) ${PDIR}/sort.bin ${PDIR}/input.bin.*
