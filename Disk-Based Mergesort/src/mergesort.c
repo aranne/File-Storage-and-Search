@@ -10,16 +10,16 @@ FILE* output_fp = NULL;
 void update_id(char * id);
 int create_runs(const char* input_f);
 void merge_runs(const char* input_f, int num);
-void merge(FILE** fps, int* bps, int num);
+void merge(FILE** fps, int** bps, int num);
 
 void basic_mergesort(const char* input_f, const char* output_f) {
-    FILE* input_fp = fopen(input_f, "rb");
+    input_fp = fopen(input_f, "rb");
     if (input_fp == NULL) {
         printf("Open file failed\n");
         return;
     }
     int runs = create_runs(input_f);
-    merge_runs(input_f, runs);
+    // merge_runs(input_f, runs);
     fclose(input_fp);
 }
 
@@ -69,13 +69,13 @@ void merge_runs(const char* input_f, int num) {
     free(bps);
 }
 
-void merge(FILE** fps, int* bps, int num) {
+void merge(FILE** fps, int** bps, int num) {
     while (input_size != 0) {
-        
+
     }
 }
 
-void update_id(char * id) {
+void update_id(char* id) {
     if (id[2] == '9') {
         id[2] = '0';
         if (id[1] == '9') {

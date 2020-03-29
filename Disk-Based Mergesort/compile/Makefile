@@ -5,7 +5,7 @@ CFLAGS  = -Wall ${INCLUDE}
 CC = gcc
 LIBS = -lm
 
-SRC = main.c buffer.c mergesort.c \
+SRC = main.c buffer.c mergesort.c heap.c \
 	  
 
 
