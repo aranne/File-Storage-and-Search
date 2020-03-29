@@ -3,6 +3,7 @@
 #include <string.h>
 #include "mergesort.h"
 #include "buffer.h"
+#include "heap.h"
 
 FILE* input_fp = NULL;
 FILE* output_fp = NULL;
@@ -18,7 +19,7 @@ void basic_mergesort(const char* input_f, const char* output_f) {
         printf("Open file failed\n");
         return;
     }
-    int runs = create_runs(input_f);
+    // int runs = create_runs(input_f);
     // merge_runs(input_f, runs);
     fclose(input_fp);
 }
