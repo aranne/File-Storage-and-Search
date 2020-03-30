@@ -19,5 +19,6 @@ typedef struct {
 
 void basic_mergesort(const char* input_f, const char* output_f);
 void multistep_mergesort(const char* input_f, const char* output_f);
+void replacement_mergesort(const char* input_f, const char* output_f);
 
 #endif

@@ -65,6 +65,10 @@ void multistep_mergesort(const char* input_f, const char* output_f) {
     fclose(output_fp);
 }
 
+void replacement_mergesort(const char* input_f, const char* output_f) {
+    
+}
+
 int create_runs(const char* input_f) {
     int load_size;
     char id[4] = "000";
