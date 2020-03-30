@@ -10,10 +10,9 @@ FILE* output_fp = NULL;
 
 void update_id(char * id);
 int create_runs(const char* input_f);
-void merge_runs(const char* input_f, int num, char* id, char* mode);
+void merge_runs(const char* input_f, int num, char* id, FILE* out_fp);
 void load_run(int r, int* buffer, int load_size, FILE* fp, run* runs);
-void merge(FILE** fps, run* runs, int num, const char* input_f, char* mode);
-void write_output(const char* input_f, char* mode, int size, char* id, int* buffer);
+void merge(FILE** fps, run* runs, int num, FILE* out_fp);
 
 void basic_mergesort(const char* input_f, const char* output_f) {
     input_fp = fopen(input_f, "rb");
@@ -24,8 +23,7 @@ void basic_mergesort(const char* input_f, const char* output_f) {
     }
     int num = create_runs(input_f);
     char id[4] = "000";
-    char* mode = "output";
-    merge_runs(input_f, num, id, mode);
+    merge_runs(input_f, num, id, output_fp);
     fclose(input_fp);
     fclose(output_fp);
 }
@@ -38,23 +36,53 @@ void multistep_mergesort(const char* input_f, const char* output_f) {
         return;
     }
     int num = create_runs(input_f);
-
+    char id[4] = "000";
+    char super_id[4] = "000";
+    char filename[30];
+    int super = 0;
+    while (num > 0) {
+        int k;
+        if (num < 15) {
+            k = num;
+        } else {
+            k = 15;
+        }
+        num -= k;
+        strcpy(filename, input_f);
+        strcat(filename, ".super.");
+        strcat(filename, super_id);
+        FILE* super_fp = fopen(filename, "wb"); 
+        merge_runs(input_f, k, id, super_fp);
+        update_id(super_id);
+        super++;
+        fclose(super_fp);
+    }
+    strcpy(super_id, "000");
+    strcpy(filename, input_f);
+    strcat(filename, ".super");
+    merge_runs(filename, super, super_id, output_fp);
+    fclose(input_fp);
+    fclose(output_fp);
 }
 
 int create_runs(const char* input_f) {
     int load_size;
     char id[4] = "000";
+    char filename[30];
     int r = 0;
     while ( (load_size = load_buffer(input, buffer_size, input_fp)) != 0) {
         sort_buffer(input, load_size);
-        write_output(input_f, "runs", load_size, id, input);
+        strcpy(filename, input_f);
+        strcat(filename, ".");
+        strcat(filename, id);
+        write_buffer(input, buffer_size, filename);
         update_id(id);
         r++;
     }
     return r;
 }
 
-void merge_runs(const char* input_f, int num, char* id, char* mode) {
+void merge_runs(const char* input_f, int num, char* id, FILE* out_fp) {
     char filename[30];
     int r;
     FILE** fps = (FILE**) malloc(num * sizeof(FILE*));
@@ -70,7 +98,7 @@ void merge_runs(const char* input_f, int num, char* id, char* mode) {
         load_run(r, bp, load_size, fps[r], runs);
         bp += load_size;
     }
-    merge(fps, runs, num, input_f, mode);
+    merge(fps, runs, num, out_fp);
     for (r = 0; r < num; r++) {
         fclose(fps[r]);
     }
@@ -84,7 +112,7 @@ void load_run(int r, int* buffer, int load_size, FILE* fp, run* runs) {
     runs[r] = new_run;
 }
 
-void merge(FILE** fps, run* runs, int num, const char* input_f, char* mode) {
+void merge(FILE** fps, run* runs, int num, FILE* out_fp) {
     int load_size = buffer_size / num;
     // heap starts at index 1
     node* heap = (node*) malloc((num + 1) * sizeof(node));
@@ -98,7 +126,6 @@ void merge(FILE** fps, run* runs, int num, const char* input_f, char* mode) {
     }
     heapfy(heap, heap_size);
     int output_size = 0;
-    char id[4] = "000";
     while (heap_size != 0) {
         output[output_size++] = heap[1].value;
         int r = heap[1].num;
@@ -117,24 +144,11 @@ void merge(FILE** fps, run* runs, int num, const char* input_f, char* mode) {
             sink(heap, 1, heap_size);
         }
         if (output_size == buffer_size || heap_size == 0) {
-            write_output(input_f, mode, output_size, id, output);
-            update_id(id);
+            fwrite(output, output_size, sizeof(int), out_fp);
             output_size = 0;
         }
     }
     free(heap);
-}
-
-void write_output(const char* input_f, char* mode, int size, char* id, int* buffer) {
-    if (strcmp(mode, "output") == 0) {
-        fwrite(buffer, size, sizeof(int), output_fp);
-    } else if (strcmp(mode, "runs") == 0) {
-        char filename[40];
-        strcpy(filename, input_f);
-        strcat(filename, ".");
-        strcat(filename, id);
-        write_buffer(buffer, size, filename);
-    }
 }
 
 void update_id(char* id) {
