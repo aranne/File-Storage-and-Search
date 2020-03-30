@@ -13,7 +13,7 @@ int main(int argc, const char * argv[]) {
     if (strcmp(mode, "--basic") == 0) {
         basic_mergesort(input, output);
     } else if (strcmp(mode, "--multistep") == 0) {
-
+        multistep_mergesort(input, output);
     } else if (strcmp(mode, "--replacement") == 0) {
 
     } else {
