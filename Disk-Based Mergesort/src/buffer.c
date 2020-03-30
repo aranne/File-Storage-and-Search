@@ -4,17 +4,10 @@
 
 int input[buffer_size];
 int output[buffer_size];
-int input_size;
 int output_size;
-
-void init_buffer() {
-    input_size = 0;
-    output_size = 0;
-}
 
 int load_buffer(int* buffer, int size, FILE* fp) {
     int read_size = fread(buffer, sizeof(int), size, fp);
-    input_size += read_size;
     return read_size;
 }
 
