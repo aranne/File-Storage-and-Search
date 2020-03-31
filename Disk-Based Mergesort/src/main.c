@@ -23,7 +23,9 @@ int main(int argc, const char * argv[]) {
         multistep_mergesort(input, output);
         gettimeofday(&end, NULL);
     } else if (strcmp(mode, "--replacement") == 0) {
-
+        gettimeofday(&start, NULL);
+        replacement_mergesort(input, output);
+        gettimeofday(&end, NULL);
     } else {
         printf("Argument name error\n");
         return 0;
