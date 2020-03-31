@@ -27,7 +27,7 @@ TARGET = ${PDIR}/${_TARGET}
 ${TARGET}:${OBJ}
 	${CC} -o $@ ${OBJ} ${CFLAGS} ${LIBS}
 
-ARGS = --replacement ${PDIR}/input.bin ${PDIR}/sort.bin
+ARGS = --basic ${PDIR}/input.bin ${PDIR}/sort.bin
 
 run: ${TARGET}
 	./${TARGET} ${ARGS}
