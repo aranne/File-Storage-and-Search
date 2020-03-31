@@ -145,7 +145,7 @@ void merge(FILE** fps, run* runs, int num, FILE* out_fp) {
             sink(heap, 1, heap_size);
         }
         if (output_size == buffer_size || heap_size == 0) {
-            fwrite(output, output_size, sizeof(int), out_fp);
+            fwrite(output, sizeof(int), output_size, out_fp);
             output_size = 0;
         }
     }
@@ -203,7 +203,7 @@ int replace_create_runs(const char* input_f) {
             sink_array(input, 0, heap_size);
         }
         if (output_size == buffer_size || heap_size == 0) {
-            fwrite(output, output_size, sizeof(int), fp);
+            fwrite(output, sizeof(int), output_size, fp);
             output_size = 0;
         }
         if (heap_size == 0) {

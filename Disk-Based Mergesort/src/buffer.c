@@ -13,7 +13,7 @@ int load_buffer(int* buffer, int size, FILE* fp) {
 
 void write_buffer(int* buffer, int size, char* filename) {
     FILE* fp = fopen(filename, "wb");
-    fwrite(buffer, size, sizeof(int), fp);
+    fwrite(buffer, sizeof(int), size, fp);
     fclose(fp);
 }
 
