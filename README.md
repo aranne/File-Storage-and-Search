@@ -1,6 +1,6 @@
-# CSC541 Data Structures For Database
+# Data Structures For Database
 ## Assignments
-The four assignments in CSC 541 will investigate different searching and sorting techniques. The topics and due dates of the four assignments are as follows:
+The four assignments will investigate different searching and sorting techniques. The topics and due dates of the four assignments are as follows:
 
 - **Assignment 1**. In-Memory vs. Disk-Based Searching.
 - **Assignment 2**. In-Memory Indexing with Availability Lists.
@@ -149,10 +149,10 @@ The availability list will not be re-built every time the student file is re-ope
 As noted above, you can assume a consistent availability list order for a given student file. In other words, if you are asked to open an existing student file, the availability list order specified on the command line will always match the order that was being used when the availability list was written to disk.
 
 When new records are added, we will search the availability list for a hole that can hold the new record. If no hole exists, the record is appended to the end of the student file. The order of the entries in the availability list is defined by the availability order specified on the command line when your program is run.
-- First Fit
+#### First Fit
 If your program sees the availability order --first-fit, it will order entries in the availability list in first in–first out order. New holes are appended to the end of the availability list. When a new record is added, a first-fit strategy is used to search from the front of the availability list until a hole is found that is large enough to hold the new record.
 If the hole is larger than the new record, the left-over fragment is saved as a new hole at the end of the availability list.
-- Best Fit
+#### Best Fit
 If your program sees the availability order --best-fit, it will order entries in the availability list sorted in ascending order of hole size. New holes are inserted into the availability list in the proper sorted position. If multiple holes have the same size, the entries for these holes should be sorted in ascending order of hole offset.
 
 When a new record is added, a best-fit strategy is used to search from the front of the availability list until a hole is found that is large enough to hold the new record. Because of how the availability list is ordered, this is the smallest hole that can hold the new record.
@@ -160,7 +160,7 @@ When a new record is added, a best-fit strategy is used to search from the front
 If the hole is larger than the new record, the left-over fragment is saved as a new hole at its sorted position in the availability list.
 
 Hint. Use C's qsort() function to sort the availability list.
-- Worst Fit
+#### Worst Fit
 If your program sees the availability order --worst-fit, it will order entries in the availability list sorted in descending order of hole size. New holes are inserted into the availability list in the proper sorted position. If multiple holes have the same size, the entries for these holes should be sorted in ascending order of hole offset.
 
 When a new record is added, a worst-fit strategy is used to examine the first entry in the availability list to see if it is large enough to hold the new record. Because of how the availability list is ordered, this is the largest hole that can hold the new record.
@@ -251,7 +251,7 @@ Mergesort's run sizes and merge performance depend on the amount of memory avail
 Your program will be assigned one input buffer for reading data (e.g., blocks of keys during run creation of parts of runs during merging). The input buffer must be sized to hold a maximum of 1000 integer keys.
 
 Your program will also be assigned one output buffer for writing data (e.g., sorted blocks of keys during run creation or sorted subsets of sort.bin during merging). The output buffer must be sized to hold a maximum of 1000 integer keys.
-- Basic Mergesort
+#### Basic Mergesort
 If your program sees the merge method --basic, it will implement a standard mergesort of the keys in input.bin. The program should perform the following steps.
 
 Open input.bin and read its contents in 1000-key blocks using the input buffer.
@@ -275,7 +275,7 @@ Whenever a run's buffer is exhausted, read another block from the run file. Cont
 You must record how much time it takes to complete the basic mergesort. This includes run creation, merging, and writing the results to sort.bin.
 
 Note. You will never be asked to merge more than 1000 runs in Step 3. This guarantees there will always be enough memory to assign a non-empty buffer to each run.
-- Multistep Mergesort
+#### Multistep Mergesort
 If your program sees the merge method --multistep, it will implement a two-step mergesort of the keys in input.bin. The program should perform the following steps.
 
 Create the initial runs for input.bin, exactly like the basic mergesort.
@@ -299,7 +299,7 @@ Merge all of the super-runs to produce sorted output. Use the input buffer to re
 You must record how much time it takes to complete the multistep mergesort. This includes initial run creation, merging to create super-runs, merging super-runs, and writing the results to sort.bin.
 
 Note. You will never be asked to merge more than 1000 super-runs in Step 3. This guarantees there will always be enough memory to assign a non-empty buffer to each super-run.
-- Replacement Selection Mergesort
+#### Replacement Selection Mergesort
 If your program sees the merge method --replacement, it will implement a mergesort that uses replacement selection to create runs from the values in input.bin. The program should perform the following steps.
 
 Divide your input buffer into two parts: 750 entries are reserved for a heap H1 ... H750, and 250 entries are reserved as an input buffer B1 ... B250 to read keys from input.bin.
