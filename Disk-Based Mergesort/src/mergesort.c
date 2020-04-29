@@ -76,7 +76,7 @@ int create_runs(const char* input_f) {
         strcpy(filename, input_f);
         strcat(filename, ".");
         strcat(filename, id);
-        write_buffer(input, buffer_size, filename);
+        write_buffer(input, load_size, filename);
         update_id(id);
         r++;
     }
