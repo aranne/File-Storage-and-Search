@@ -7,9 +7,9 @@ typedef struct _node {
     int value;
     struct _node *next;
     struct _node *prev;
-} node;
+} node_t;
 
-node* new_node(node* prev, int value, node* next);
-void free_node(node* node);
+node_t* new_node(node_t* prev, int value, node_t* next);
+void free_node(node_t* node);
 
 #endif 

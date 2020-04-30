@@ -1,17 +1,17 @@
 #include <stdlib.h>
-#include "node.h"
+#include <node.h>
 
-node* new_node(node* prev, int value, node* next) {
-    node *n = (node*) malloc(sizeof(node));
-    n->value = value;
-    n->prev = prev;
-    n->next = next;
-    return n;
+node_t* new_node(node_t* prev, int value, node_t* next) {
+    node_t *node = (node_t*) malloc(sizeof(node));
+    node->value = value;
+    node->prev = prev;
+    node->next = next;
+    return node;
 }
 
-void free_node(node* n) {
-    free(n);
-    n->value = 0;
-    n->prev = NULL;
-    n->next = NULL;
+void free_node(node_t* node) {
+    free(node);
+    node->value = 0;
+    node->prev = NULL;
+    node->next = NULL;
 }

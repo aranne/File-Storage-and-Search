@@ -5,7 +5,7 @@ CFLAGS  = -Wall ${INCLUDE}
 CC = gcc
 LIBS = -lm
 
-SRC = app.c btree_node.c btree.c test.c 
+SRC = app.c btree_node.c btree.c test.c node.c 
 	  
 
 
