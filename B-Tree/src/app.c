@@ -49,7 +49,7 @@ void parse(char *line) {
         int key = atoi(command[1]);
         search(key, TRUE);
     } else if (strcmp(command[0], "print\n") == 0 || strcmp(command[0], "print") == 0) {
-        
+        print_btree();
     } else {
         printf("Input Command Format Error\n");
     }

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <btree.h>
+#include <queue.h>
 
 FILE* fp;
 long root;
@@ -247,6 +248,29 @@ void print_btree(void) {
     if (root == -1) {
         printf("B-Tree is empty\n");
     }
-    btree_node *node = read_btree_node(root);
-    
+    queue_t queue = create_queue();
+    add_queue(&queue, root);
+    int level = 1;
+    int k, i;
+    while (!isempty_queue(&queue)) {
+        printf(" %d: ", level++);
+        long off;
+        btree_node *node;
+        int len = queue.len;
+        for (k = 0; k < len; k++) {
+            off = poll_queue(&queue);
+            node = read_btree_node(off);
+            for( i = 0; i < node->n - 1; i++ ) { 
+                printf( "%d,", node->keys[i] ); 
+            } 
+            printf( "%d ", node->keys[node->n - 1] );
+            if (!isleaf(node)) {
+                for (i = 0; i < node->n + 1; i++) {
+                    add_queue(&queue, node->child[i]);
+                }
+            }
+            free_btree_node(node);
+        }
+        printf("\n");
+    }
 }

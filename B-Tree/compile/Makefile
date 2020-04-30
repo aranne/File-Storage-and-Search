@@ -30,7 +30,7 @@ ${TARGET}:${OBJ}
 ARGS = ${PDIR}/input.bin 4
 
 run: ${TARGET}
-	./${TARGET} ${ARGS}
+	./${TARGET} ${ARGS} < ${PDIR}/input-01-ex.txt > ${PDIR}/output-01-ex.txt
 
 .PHONY: clean
 

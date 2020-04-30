@@ -47,3 +47,7 @@ long poll_queue(queue_t *queue) {
         return -1;
     }
 }
+
+boolean isempty_queue(queue_t *queue) {
+    return queue->len == 0;
+}
