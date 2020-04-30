@@ -201,8 +201,8 @@ To add a new record to the student file
 
 1. Binary search the index for an entry with a key value equal to the new rec's SID. If such an entry exists, then rec has the same primary key as a record already in the student file. Write 
 
-            Record with SID=key exists 
-            
+        Record with SID=key exists 
+
     on-screen, and ignore the add request, since this is not allowed. If the user wants to update an already-existing record, they must first delete it, then re-add it.
 
 2. Search the availability list for a hole that can hold hold rec plus the record size integer that precedes it.
@@ -322,7 +322,7 @@ If your program sees the merge method --replacement, it will implement a mergeso
 
   * If H1 > B1, replace H1 with H750, reducing the size of the heap by one. Replace H750 with B1, increasing the size of the secondary heap by one.
 
-  Adjust H1 to reform H into a heap.
+    Adjust H1 to reform H into a heap.
 
 4. Continue replacement selection until H is empty, at which point the current run is completed. The secondary heap will be full, so it replaces H, and a new run is started.
 
@@ -409,39 +409,51 @@ if ( fp == NULL ) {
 ## User Interface
 The user will communicate with your program through a set of commands typed at the keyboard. Your program must support four simple commands:
 
-###### add k
-Add a new integer key with value k to index.bin.
-###### find k
-Find an entry with a key value of k in index.bin, if it exists.
-###### print
-Print the contents and the structure of the B-tree on-screen.
-###### end
-Update the root node's offset at the front of the index.bin, and close the index file, and end the program.
-###### Add
+* add k
+
+    Add a new integer key with value k to index.bin.
+    
+* find k
+
+    Find an entry with a key value of k in index.bin, if it exists.
+* print
+
+    Print the contents and the structure of the B-tree on-screen.
+* end
+
+    Update the root node's offset at the front of the index.bin, and close the index file, and end the program.
+#### Add
+
 Use a standard B-tree algorithm to add a new key k to the index file.
 
-Search the B-tree for the leaf node L responsible for k. If k is stored in L's key list, print
+1. Search the B-tree for the leaf node L responsible for k. If k is stored in L's key list, print
 
-Entry with key=k already exists on-screen and stop, since duplicate keys are not allowed.
+        Entry with key=k already exists 
 
-Create a new key list K that contains L's keys, plus k, sorted in ascending order.
+    on-screen and stop, since duplicate keys are not allowed.
 
-If L's key list is not full, replace it with K, update L's child offsets, write L back to disk, and stop. Otherwise, split K about its median key value km into left and right key lists KL = (k0, ... , km-1) and KR = (km+1, ... , kn-1). Use ceiling to calculate m = ⌈(n-1)/2⌉. For example, if n = 3, m = 1. If n = 4, m = 2.
+2. Create a new key list K that contains L's keys, plus k, sorted in ascending order.
 
-Save KL and its associated child offsets in L, then write L back to disk.
+3. If L's key list is not full, replace it with K, update L's child offsets, write L back to disk, and stop. Otherwise, split K about its median key value km into left and right key lists KL = (k0, ... , km-1) and KR = (km+1, ... , kn-1). Use ceiling to calculate m = ⌈(n-1)/2⌉. For example, if n = 3, m = 1. If n = 4, m = 2.
 
-Save KR and its associated child offsets in a new node R, then append R to the end of the index file.
+4. Save KL and its associated child offsets in L, then write L back to disk.
 
-Promote km , L's offset, and R's offset and insert them in L's parent node. If the parent's key list is full, recursively split its list and promote the median to its parent.
+5. Save KR and its associated child offsets in a new node R, then append R to the end of the index file.
 
-If a promotion is made to a root node with a full key list, split and create a new root node holding km and offsets to L and R.
-###### Find
+6. Promote km , L's offset, and R's offset and insert them in L's parent node. If the parent's key list is full, recursively split its list and promote the median to its parent.
+
+7. If a promotion is made to a root node with a full key list, split and create a new root node holding km and offsets to L and R.
+#### Find
 To find key value k in the index file, search the root node for k. If k is found, the search succeeds. Otherwise, determine the child subtree S that is responsible for k, then recursively search S. If k is found during the recursive search, print
 
-Entry with key=k exists on-screen. If at any point in the recursion S does not exist, print
+    Entry with key=k exists 
 
-Entry with key=k does not exist on-screen.
-###### Print
+on-screen. If at any point in the recursion S does not exist, print
+
+    Entry with key=k does not exist 
+
+on-screen.
+#### Print
 This command prints the contents of the B-tree on-screen, level by level. Begin by considering a single B-tree node. To print the contents of the node on-screen, print its key values separated by commas.
 ```
 int         i;      /* Loop counter */
@@ -455,10 +467,10 @@ printf( "%d", node.key[ node.n - 1 ] );
 ```
 To print the entire tree, start by printing the root node. Next, print the root node's children on a new line, separating each child node's output by a space character. Then, print their children on a new line, and so on until all the nodes in the tree are printed. This approach prints the nodes on each level of the B-tree left-to-right on a common line.
 For example, inserting the integers 1 through 13 inclusive into an order-4 B-tree would produce the following output.
- 1: 9
- 2: 3,6 12
- 3: 1,2 4,5 7,8 10,11 13
+     1: 9
+     2: 3,6 12
+     3: 1,2 4,5 7,8 10,11 13
 Hint. To process nodes left-to-right level-by-level, do not use recursion. Instead, create a queue containing the root node's offset. Remove the offset at the front of the queue (initially the root's offset) and read the corresponding node from disk. Append the node's non-empty subtree offsets to the end of the queue, then print the node's key values. Continue until the queue is empty.
-###### End
+#### End
 This command ends the program by writing the root node's offset to the front of index.bin, then closing the index file.
 
