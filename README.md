@@ -1,19 +1,19 @@
 # Advance Data Structures
-## Assignments
-The four assignments will investigate different searching and sorting techniques. The topics and due dates of the four assignments are as follows:
 
-- **Assignment 1**. In-Memory vs. Disk-Based Searching.
-- **Assignment 2**. In-Memory Indexing with Availability Lists.
-- **Assignment 3**. Disk-Based Mergesort.
-- **Assignment 4**. B-Trees.
+Four different searching and sorting techniques. The topics are as follows:
 
-## Assignment 1
+- **In-Memory vs. Disk-Based Searching**
+- **In-Memory Indexing with Availability Lists**
+- **Disk-Based Mergesort**
+- **B-Trees**
+
+## In-Memory vs. Disk-Based Searching
 ## Introduction
-The goals of this assignment are two-fold:
+The goals are two-fold:
 - To introduce you to random-access file I/O in UNIX using C.
 - To investigate time efficiency issues associated with in-memory versus disk-based searching strategies.
 
-This assignment uses two "lists" of integer values: a key list and a seek list. The key list is a collection of integers K = (k0, ..., kn-1) representing n keys for a hypothetical database. The seek list is a separate collection of integers S = (s0, ..., sm-1) representing a sequence of m requests for keys to be retrieved from the database.
+We will use two "lists" of integer values: a key list and a seek list. The key list is a collection of integers K = (k0, ..., kn-1) representing n keys for a hypothetical database. The seek list is a separate collection of integers S = (s0, ..., sm-1) representing a sequence of m requests for keys to be retrieved from the database.
 
 You will implement two different search strategies to try to locate each si from the seek list:
 1. Linear search. A sequential search of K for a key that matches the current seek value si.
@@ -82,9 +82,9 @@ If your program sees the search mode --disk-bin, it will implement an on-disk bi
 4. For each S[i], use a binary search on key.db to find a matching key value. If S[i] is found in key.db, set hit[i]=1. If S[i] is not found in key.db, set hit[i]=0.
 You must record how much time it takes to to determine the presence or absence of each S[i] in key.db. This is the total cost of performing the necessary steps in an on-disk binary search. Be sure to measure only the time needed to search key.db for each S[i]. Any other processing should not be included.
 
-## Assignment 2
+## In-Memory Indexing with Availability Lists
 ## Introduction
-The goals of this assignment are three-fold:
+The goals are three-fold:
 1. To investigate the use of field delimiters and record sizes for field and record organization.
 2. To build and maintain an in-memory primary key index to improve search efficiency.
 3. To use an in-memory availability list to support the reallocation of space for records that are deleted.
@@ -190,9 +190,11 @@ The user will communicate with your program through a set of commands typed at t
     712412913|Ford|Rob|Phi
 
 * del key
+
     Delete the record with SID of key from the student file, if it exists.
 
 * end
+
     End the program, close the student file, and write the index and availability lists to the corresponding index and availability files.
 #### Add
 To add a new record to the student file
@@ -232,13 +234,13 @@ on-screen.
 #### End
 This command ends the program by closing the student file, and writing the index and availability lists to their corresponding index and availability list files.
 
-## Assignment 3
+## Disk-Based Mergesort
 ## Introduction
-The goals of this assignment are two-fold:
+The goals are two-fold:
 1. To introduce you to sorting data on disk using mergesort.
 2. To compare the performance of different algorithms for creating and merging runs during mergesort.
 ## Index File
-During this assignment you will sort a binary index file of integer key values. The values are stored in the file in a random order. You will use a mergesort to produce a second index file whose key values are sorted in ascending order.
+We will sort a binary index file of integer key values. The values are stored in the file in a random order. You will use a mergesort to produce a second index file whose key values are sorted in ascending order.
 ## Program Execution
 Your program will be named assn_3 and it will run from the command line. Three command line arguments will be specified: a mergesort method, the name of the input index file, and the name of the sorted output index file.
 ```
@@ -253,7 +255,7 @@ For example, executing your program as follows
 assn_3 --multistep input.bin sort.bin
 ```
 would apply a multistep mergesort to input.bin to sort it ascending by key value. The result would be stored in sort.bin.
-Note. For convenience, we refer to the input index file as input.bin and the output sorted index file as sort.bin throughout the remainder of the assignment.
+Note. For convenience, we refer to the input index file as input.bin and the output sorted index file as sort.bin.
 ## Available Memory
 Mergesort's run sizes and merge performance depend on the amount of memory available for run creating and merging runs.
 Your program will be assigned one input buffer for reading data (e.g., blocks of keys during run creation of parts of runs during merging). The input buffer must be sized to hold a maximum of 1000 integer keys.
@@ -262,85 +264,83 @@ Your program will also be assigned one output buffer for writing data (e.g., sor
 #### Basic Mergesort
 If your program sees the merge method --basic, it will implement a standard mergesort of the keys in input.bin. The program should perform the following steps.
 
-Open input.bin and read its contents in 1000-key blocks using the input buffer.
+1. Open input.bin and read its contents in 1000-key blocks using the input buffer.
 
-Sort each block and write it to disk as a run file. You can use any in-memory sorting algorithm you want (e.g., C's qsort() function). Name each run file index-file.n, where n is a 3-digit run identifier, starting at 0. For example, if the input index file is input.bin, the run files would be named
+2. Sort each block and write it to disk as a run file. You can use any in-memory sorting algorithm you want (e.g., C's qsort() function). Name each run file index-file.n, where n is a 3-digit run identifier, starting at 0. For example, if the input index file is input.bin, the run files would be named
 
-input.bin.000
+          input.bin.000
 
-input.bin.001
+          input.bin.001
 
-input.bin.002
+          input.bin.002
 
-...
+          ...
 
-Open each run file and buffer part of its contents into the input buffer. The amount of each run you can buffer will depend on how many runs you are merging (e.g., merging 50 runs using the 1000-key input buffer allows you to buffer 20 keys per run).
+3. Open each run file and buffer part of its contents into the input buffer. The amount of each run you can buffer will depend on how many runs you are merging (e.g., merging 50 runs using the 1000-key input buffer allows you to buffer 20 keys per run).
 
-Merge the runs to produce sorted output. Use the output buffer to write the results in 1000-key chunks as binary data to sort.bin.
+4. Merge the runs to produce sorted output. Use the output buffer to write the results in 1000-key chunks as binary data to sort.bin.
 
-Whenever a run's buffer is exhausted, read another block from the run file. Continue until all run files are exhausted.
+5. Whenever a run's buffer is exhausted, read another block from the run file. Continue until all run files are exhausted.
 
 You must record how much time it takes to complete the basic mergesort. This includes run creation, merging, and writing the results to sort.bin.
 
-Note. You will never be asked to merge more than 1000 runs in Step 3. This guarantees there will always be enough memory to assign a non-empty buffer to each run.
+**Note.** You will never be asked to merge more than 1000 runs in Step 3. This guarantees there will always be enough memory to assign a non-empty buffer to each run.
 #### Multistep Mergesort
 If your program sees the merge method --multistep, it will implement a two-step mergesort of the keys in input.bin. The program should perform the following steps.
 
-Create the initial runs for input.bin, exactly like the basic mergesort.
+1. Create the initial runs for input.bin, exactly like the basic mergesort.
 
-Merge a set of 15 runs to produce a super-run. Open the first 15 run files and buffer them using your input buffer. Merge the 15 runs to produce sorted output, using your output buffer to write the results as binary data to a super-run file.
+2. Merge a set of 15 runs to produce a super-run. Open the first 15 run files and buffer them using your input buffer. Merge the 15 runs to produce sorted output, using your output buffer to write the results as binary data to a super-run file.
 
-Continue merging sets of 15 runs until all of the runs have been processed. Name each super-run file index-file.super.n, where n is a 3-digit super-run identifier, starting at 0. For example, if the input file is input.bin, the super-run files would be named
+3. Continue merging sets of 15 runs until all of the runs have been processed. Name each super-run file index-file.super.n, where n is a 3-digit super-run identifier, starting at 0. For example, if the input file is input.bin, the super-run files would be named
 
-input.bin.super.000
+        input.bin.super.000
 
-input.bin.super.001
+        input.bin.super.001
 
-input.bin.super.002
+        input.bin.super.002
 
-...
+        ...
 
-Note. If the number of runs created in Step 1 is not evenly divisible by 15, the final super-run will merge fewer than 15 runs.
+**Note.** If the number of runs created in Step 1 is not evenly divisible by 15, the final super-run will merge fewer than 15 runs.
 
-Merge all of the super-runs to produce sorted output. Use the input buffer to read part of the contents of each super-run. Use the output buffer to write the results in 1000-key chunks as binary data to sort.bin.
+4. Merge all of the super-runs to produce sorted output. Use the input buffer to read part of the contents of each super-run. Use the output buffer to write the results in 1000-key chunks as binary data to sort.bin.
 
 You must record how much time it takes to complete the multistep mergesort. This includes initial run creation, merging to create super-runs, merging super-runs, and writing the results to sort.bin.
 
-Note. You will never be asked to merge more than 1000 super-runs in Step 3. This guarantees there will always be enough memory to assign a non-empty buffer to each super-run.
+**Note.** You will never be asked to merge more than 1000 super-runs in Step 3. This guarantees there will always be enough memory to assign a non-empty buffer to each super-run.
 #### Replacement Selection Mergesort
 If your program sees the merge method --replacement, it will implement a mergesort that uses replacement selection to create runs from the values in input.bin. The program should perform the following steps.
 
-Divide your input buffer into two parts: 750 entries are reserved for a heap H1 ... H750, and 250 entries are reserved as an input buffer B1 ... B250 to read keys from input.bin.
+1. Divide your input buffer into two parts: 750 entries are reserved for a heap H1 ... H750, and 250 entries are reserved as an input buffer B1 ... B250 to read keys from input.bin.
 
-Read the first 750 keys from input.bin into H, and the next 250 keys into B. Rearrange H so it forms an ascending heap.
+2. Read the first 750 keys from input.bin into H, and the next 250 keys into B. Rearrange H so it forms an ascending heap.
 
-Append H1 (the smallest value in the heap) to the current run, managed through the output buffer. Use replacement selection to determine where to place B1.
+3. Append H1 (the smallest value in the heap) to the current run, managed through the output buffer. Use replacement selection to determine where to place B1.
 
-If H1 ≤ B1, replace H1 with B1.
+  * If H1 ≤ B1, replace H1 with B1.
 
-If H1 > B1, replace H1 with H750, reducing the size of the heap by one. Replace H750 with B1, increasing the size of the secondary heap by one.
+  * If H1 > B1, replace H1 with H750, reducing the size of the heap by one. Replace H750 with B1, increasing the size of the secondary heap by one.
 
-Adjust H1 to reform H into a heap.
+  Adjust H1 to reform H into a heap.
 
-Continue replacement selection until H is empty, at which point the current run is completed. The secondary heap will be full, so it replaces H, and a new run is started.
+4. Continue replacement selection until H is empty, at which point the current run is completed. The secondary heap will be full, so it replaces H, and a new run is started.
 
-Run creation continues until all values in input.bin have been processed. Name the runs exactly as you did for the basic mergesort (i.e., input.bin.000, input.bin.001, and so on).
+5. Run creation continues until all values in input.bin have been processed. Name the runs exactly as you did for the basic mergesort (i.e., input.bin.000, input.bin.001, and so on).
 
-Merge the runs to produce sorted output, exactly like the merge step in the basic mergesort.
+6. Merge the runs to produce sorted output, exactly like the merge step in the basic mergesort.
 
 You must record how much time it takes to complete the replacement selection mergesort. This includes replacement selection run creation, merging the replacement selection runs, and writing the results to sort.bin.
 
-Note. You will never be asked to merge more than 1000 runs in Step 6. This guarantees there will always be enough memory to assign a non-empty buffer to each run.
-## Programming Environment
-All programs must be written in C, and compiled to run on the remote.eos.ncsu.edu Linux server. Any ssh client can be used to access your Unity account and AFS storage space on this machine.
+**Note.** You will never be asked to merge more than 1000 runs in Step 6. This guarantees there will always be enough memory to assign a non-empty buffer to each run.
 
-## Assignment 4
+## B-Tree
 ## Introduction
-The goals of this assignment are two-fold:
+The goals are two-fold:
 1. To introduce you to searching data on disk using B-trees.
 2. To investigate how changing the order of a B-tree affects its performance.
 Index File
-During this assignment you will create, search, and manage a binary index file of integer key values. The values stored in the file will be specified by the user. You will structure the file as a B-tree.
+We will create, search, and manage a binary index file of integer key values. The values stored in the file will be specified by the user. You will structure the file as a B-tree.
 ## Program Execution
 Your program will be named assn_4 and it will run from the command line. Two command line arguments will be specified: the name of the index file, and a B-tree order.
 ```
@@ -350,7 +350,7 @@ For example, executing your program as follows
 ```
 assn_4 index.bin 4
 ```
-would open an index file called index.bin that holds integer keys stored in an order-4 B-tree. You can assume order will always be ≥ 3. For convenience, we refer to the index file as index.bin throughout the remainder of the assignment.
+would open an index file called index.bin that holds integer keys stored in an order-4 B-tree. You can assume order will always be ≥ 3. For convenience, we refer to the index file as index.bin.
 
 Note. If you are asked open an existing index file, you can assume the B-tree order specified on the command line matches the order that was used when the index file was first created.
 ## B-Tree Nodes
@@ -461,7 +461,4 @@ For example, inserting the integers 1 through 13 inclusive into an order-4 B-tre
 Hint. To process nodes left-to-right level-by-level, do not use recursion. Instead, create a queue containing the root node's offset. Remove the offset at the front of the queue (initially the root's offset) and read the corresponding node from disk. Append the node's non-empty subtree offsets to the end of the queue, then print the node's key values. Continue until the queue is empty.
 ###### End
 This command ends the program by writing the root node's offset to the front of index.bin, then closing the index file.
-## Programming Environment
-All programs must be written in C, and compiled to run on the remote.eos.ncsu.edu Linux server. Any ssh client can be used to access your Unity account and AFS storage space on this machine.
 
-Your assignment will be run automatically, and the output it produces will be compared to known, correct output using diff. Because of this, your output must conform to the print command's description. If it doesn't, diff will report your output as incorrect, and it will be marked accordingly.
