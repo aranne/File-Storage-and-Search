@@ -168,60 +168,68 @@ When a new record is added, a worst-fit strategy is used to examine the first en
 If the hole is larger than the new record, the left-over fragment is saved as a new hole at its sorted position in the availability list.
 
 Hint. Use C's qsort() function to sort the availability list.
-- User Interface
+## User Interface
 The user will communicate with your program through a set of commands typed at the keyboard. Your program must support four simple commands:
 
-###### add key rec
+* add key rec
 
-Adds a new record rec with an SID of key to the student file. The format of rec is a |-delimited set of fields (exactly as described in Student File section above), for example
+    Adds a new record rec with an SID of key to the student file. The format of rec is a |-delimited set of fields (exactly as described in Student File section above), for example
 
-add 712412913 712412913|Ford|Rob|Phi
+    add 712412913 712412913|Ford|Rob|Phi
 
-adds a new record with an SID of 712412913, a last of Ford, a first of Rob, and a major of Phi.
+    adds a new record with an SID of 712412913, a last of Ford, a first of Rob, and a major of Phi.
 
-###### find key
-Finds the record with SID of key in the student file, if it exists. The record should be printed in |-delimited format, (exactly as described in Student File section above), for example
+* find key
 
-find 712412913
+    Finds the record with SID of key in the student file, if it exists. The record should be printed in |-delimited format, (exactly as described in Student File section above), for example
 
-should print on-screen
+    find 712412913
 
-712412913|Ford|Rob|Phi
+    should print on-screen
 
-###### del key
-Delete the record with SID of key from the student file, if it exists.
+    712412913|Ford|Rob|Phi
 
-###### end
-End the program, close the student file, and write the index and availability lists to the corresponding index and availability files.
-###### Add
+* del key
+    Delete the record with SID of key from the student file, if it exists.
+
+* end
+    End the program, close the student file, and write the index and availability lists to the corresponding index and availability files.
+#### Add
 To add a new record to the student file
 
-Binary search the index for an entry with a key value equal to the new rec's SID. If such an entry exists, then rec has the same primary key as a record already in the student file. Write
+1. Binary search the index for an entry with a key value equal to the new rec's SID. If such an entry exists, then rec has the same primary key as a record already in the student file. Write 
 
-Record with SID=key exists
+            Record with SID=key exists 
+            
+    on-screen, and ignore the add request, since this is not allowed. If the user wants to update an already-existing record, they must first delete it, then re-add it.
 
-on-screen, and ignore the add request, since this is not allowed. If the user wants to update an already-existing record, they must first delete it, then re-add it.
+2. Search the availability list for a hole that can hold hold rec plus the record size integer that precedes it.
 
-Search the availability list for a hole that can hold hold rec plus the record size integer that precedes it.
+    If a hole is found, remove it from the availability list, and write rec's size and body to the hole's offset. If the hole is bigger than rec plus its record size integer, there will be a fragment left at the end of the hole. Add the fragment back to the availability list as a new, smaller hole.
 
-If a hole is found, remove it from the availability list, and write rec's size and body to the hole's offset. If the hole is bigger than rec plus its record size integer, there will be a fragment left at the end of the hole. Add the fragment back to the availability list as a new, smaller hole.
+    If no appropriately-sized hole exist in the availability list, append rec's size and body to the end of the student file.
+    
+3. Regardless of where rec is written, a new entry must be added to the index holding rec's key and offset, maintaining the index in key-sorted order.
 
-If no appropriately-sized hole exist in the availability list, append rec's size and body to the end of the student file.
-Regardless of where rec is written, a new entry must be added to the index holding rec's key and offset, maintaining the index in key-sorted order.
-
-###### Find
+#### Find
 To find a record, binary search the index for an entry with a key value of key. If an entry is found, use it's offset to locate and read the record, then print the record on-screen.
 
 If no index entry with the given key exists, write
 
-No record with SID=key exists on-screen.
-###### Del
+    No record with SID=key exists 
+
+on-screen.
+#### Del
 To delete a record, binary search the index for an entry with a key value of key.
 
 If an entry is found, use the entry's offset to locate and read the size of the record. Since the record is being deleted, it will form a hole in the student file. Add a new entry to the availability list containing the new hole's location and size. Remember, the size of the hole is the size of the record being deleted, plus the size of the integer preceding the record. Finally, remove the entry for the deleted record from the index.
 
-If no index entry with the given key exists, print No record with SID=key exists on-screen.
-###### End
+If no index entry with the given key exists, print 
+
+    No record with SID=key exists 
+
+on-screen.
+#### End
 This command ends the program by closing the student file, and writing the index and availability lists to their corresponding index and availability list files.
 
 ## Assignment 3
