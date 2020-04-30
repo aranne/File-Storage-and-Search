@@ -8,6 +8,8 @@ int order;
 
 boolean search_helper(btree_node *node, int key);
 result_t add_helper(btree_node* node, int key, long offset);
+result_t insert(btree_node *node, result_t result, long offset);
+result_t split(btree_node *node, result_t result, long offset);
 
 
 void init_btree(const char* filename, const char* order_s) {
@@ -24,23 +26,29 @@ void init_btree(const char* filename, const char* order_s) {
     }
 }
 
-void write_btree() {
+void close_btree() {
     fseek(fp, 0, SEEK_SET);
     fwrite(&root, sizeof(long), 1, fp);
     fclose(fp);
 }
 
-boolean search(int key) {
+boolean search(int key, boolean print) {
     if (root == -1) {
-        printf("Entry with key=%d does not exist\n", key);
+        if (print) {
+            printf("Entry with key=%d does not exist\n", key);
+        }
         return FALSE;
     }
     btree_node *root_node = read_btree_node(root);
     boolean find = search_helper(root_node, key);
     if (find) {
-        printf("Entry with key=%d exists\n", key);
+        if (print) {
+            printf("Entry with key=%d exists\n", key);
+        }
     } else {
-        printf("Entry with key=%d does not exist\n", key);
+        if (print) {
+            printf("Entry with key=%d does not exist\n", key);
+        }
     }
     return find;
 }
@@ -67,7 +75,7 @@ boolean search_helper(btree_node *node, int key) {
 }
 
 void add(int key) {
-    if (search(key)) {
+    if (search(key, FALSE)) {
         printf("Entry with key=%d already exists\n", key);
         return;
     }
@@ -233,4 +241,12 @@ result_t split(btree_node *node, result_t result, long offset) {
     write_btree_node(new_node, new_offset);
     result_t res = {promoted, new_offset};
     return res;
+}
+
+void print_btree(void) {
+    if (root == -1) {
+        printf("B-Tree is empty\n");
+    }
+    btree_node *node = read_btree_node(root);
+    
 }

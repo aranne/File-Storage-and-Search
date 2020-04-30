@@ -2,6 +2,8 @@
 #include <btree.h>
 #include <test.h>
 
+result_t insert(btree_node *node, result_t result, long offset);
+result_t split(btree_node *node, result_t result, long offset);
 
 void test_insert1() {
     btree_node *node = new_btree_node();
@@ -14,14 +16,7 @@ void test_insert1() {
     result_t res = {0, 100};
     insert(node, res, 0);
     node = read_btree_node(0);
-    int i;
-    for (i = 0; i < node->n; i++) {
-        printf("%d ", node->keys[i]);
-    }
-    printf("\nchild\n");
-    for (i = 0; i < node->n + 1; i++) {
-        printf("%d ", node->child[i]);
-    }
+    print_node(node);
 }
 
 void test_insert2() {
@@ -32,14 +27,7 @@ void test_insert2() {
     result_t res = {0, 100};
     insert(node, res, 0);
     node = read_btree_node(0);
-    int i;
-    for (i = 0; i < node->n; i++) {
-        printf("%d ", node->keys[i]);
-    }
-    printf("\nchild\n");
-    for (i = 0; i < node->n + 1; i++) {
-        printf("%d ", node->child[i]);
-    }
+    print_node(node);
 }
 
 void test_split1() {
