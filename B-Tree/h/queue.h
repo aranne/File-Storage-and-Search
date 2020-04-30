@@ -10,5 +10,7 @@ typedef struct {
 
 queue_t create_queue(void);
 void free_queue(queue_t *queue);
+void add_queue(queue_t *queue, long value);
+long poll_queue(queue_t *queue);
 
 #endif

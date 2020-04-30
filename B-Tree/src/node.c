@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <node.h>
 
-node_t* new_node(node_t* prev, int value, node_t* next) {
+node_t* new_node(node_t* prev, long value, node_t* next) {
     node_t *node = (node_t*) malloc(sizeof(node));
     node->value = value;
     node->prev = prev;

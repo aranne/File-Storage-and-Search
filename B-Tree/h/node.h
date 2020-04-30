@@ -4,12 +4,12 @@
 #include <stdio.h>
 
 typedef struct _node {
-    int value;
+    long value;
     struct _node *next;
     struct _node *prev;
 } node_t;
 
-node_t* new_node(node_t* prev, int value, node_t* next);
+node_t* new_node(node_t* prev, long value, node_t* next);
 void free_node(node_t* node);
 
 #endif 
