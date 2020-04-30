@@ -1,4 +1,4 @@
-# Data Structures For Database
+# Advance Data Structures
 ## Assignments
 The four assignments will investigate different searching and sorting techniques. The topics and due dates of the four assignments are as follows:
 
