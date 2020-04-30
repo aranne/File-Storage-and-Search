@@ -7,9 +7,9 @@ int main(int argc, const char * argv[]) {
         printf("Number of arguments error\n");
         return 0;
     }
-    printf("Running\n");
     const char* filename = argv[1];
     const char* order = argv[2];
     init_btree(filename, order);
+    test_split2();
     return 0;
 }

@@ -21,5 +21,6 @@ btree_node* read_btree_node(long offset);
 void write_btree_node(btree_node *node, long offset);
 void free_btree_node(btree_node *node);
 boolean isleaf(btree_node *node);
+void print_node(btree_node *node);
 
 #endif

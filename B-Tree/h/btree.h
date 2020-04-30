@@ -16,4 +16,7 @@ void write_btree(void);
 boolean search(int key);
 void add(int key);
 
+result_t insert(btree_node *node, result_t result, long offset);
+result_t split(btree_node *node, result_t result, long offset);
+
 #endif

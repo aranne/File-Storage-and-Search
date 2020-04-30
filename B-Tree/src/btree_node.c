@@ -51,3 +51,17 @@ void free_btree_node(btree_node *node) {
 boolean isleaf(btree_node *node) {
     return node->child[0] == -1;
 }
+
+void print_node(btree_node *node) {
+    printf("Size: %d\n", node->n);
+    printf("Keys: ");
+    int i;
+    for (i = 0; i < node->n; i++) {
+        printf("%d ", node->keys[i]);
+    }
+    printf("\nChildren: ");
+    for (i = 0; i < node->n + 1; i++) {
+        printf("%ld ", node->child[i]);
+    }
+    printf("\n");
+}

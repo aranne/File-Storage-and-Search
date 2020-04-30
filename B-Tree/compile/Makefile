@@ -5,7 +5,7 @@ CFLAGS  = -Wall ${INCLUDE}
 CC = gcc
 LIBS = -lm
 
-SRC = app.c btree_node.c btree.c 
+SRC = app.c btree_node.c btree.c test.c 
 	  
 
 
@@ -35,4 +35,4 @@ run: ${TARGET}
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o $(TARGET) ${PDIR}/input.bin.*
+	rm -f $(ODIR)/*.o $(TARGET) ${PDIR}/input.bin
